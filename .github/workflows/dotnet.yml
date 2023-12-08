@@ -40,7 +40,7 @@ jobs:
         run: msbuild /p:Configuration=Release WebAppFramework.sln
 
       - name: Setup VS Test
-        uses: darenm/Setup-VSTest@v2
+        uses: darenm/Setup-VSTest@v1
         id: setup_vstest
       
       - name: Run Tests
