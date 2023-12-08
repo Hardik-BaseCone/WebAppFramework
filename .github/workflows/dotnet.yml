@@ -46,4 +46,4 @@ jobs:
       - name: Run Tests
         id: run_vstest
         working-directory: WebAppFramework.Unit.Tests\bin\Release
-        run: vstest.console.exe .\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage /Logger:trx;LogFileName=sonarqube-coverage
+        run: vstest.console.exe .\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage /Logger:trx;LogFileName=SonarqubeCoverage.trx
