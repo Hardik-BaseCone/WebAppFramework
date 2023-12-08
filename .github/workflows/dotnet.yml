@@ -18,7 +18,7 @@ on:
       - main
       
 jobs:
-  sonarqubeV1:
+  App-Run-Build-Test:
     runs-on: windows-latest
    
     steps:     
