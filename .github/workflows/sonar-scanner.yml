@@ -1,1 +1,30 @@
+name: Sonar Code Coverage
+on:
+  # trigger manually. Can be used to validate feature branches before open pull request
+  workflow_dispatch:
+    inputs:
+      codecoveragetool:
+        type: choice
+        description: Code Coverage Tool
+        required: true
+        default: dotnet-coverage
+        options:
+          - dotnet-coverage
+  push: 
+    branches:
+      - main
+      
+jobs:
+  Application-Build-Test:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Download Sonar-Scanner
+        # working-directory: ./
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile "sonar-scanner-msbuild.zip"
 
+      - name: Unzipp Sonar-Scanner
+        run: |
+          Expand-Archive -Force sonar-scanner-msbuild.zip unzipped
