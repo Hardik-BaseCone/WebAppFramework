@@ -24,21 +24,21 @@ jobs:
         run: |
           git config --system core.longpaths true
 
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
                     
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.3.1
 
-      - name: Setup VS Test
+      - name: Setup VSTest
         # id: setup_vstest
         uses: darenm/Setup-VSTest@v1
 
-      - name: Install NuGet
+      - name: Restore packages
         run: |
           nuget restore WebAppFramework.sln
 
-      - name: Build for Release
+      - name: Build with Release
         run: |
           msbuild /p:Configuration=Release WebAppFramework.sln
       
@@ -48,3 +48,12 @@ jobs:
         run: |
           vstest.console.exe .\WebAppFramework.Unit.Tests.dll 
         # /EnableCodeCoverage /Logger:trx;LogFileName=SonarqubeCoverage.trx
+
+      - name: Download Sonar-Scanner
+        working-directory: ./
+        run: |
+          Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile ".\sonar-scanner\sonar-scanner-msbuild.zip"
+
+      - name: Unzipp Sonar-Scanner
+        run: |
+          Expand-Archive -Force .\sonar-scanner\sonar-scanner-msbuild.zip .\Sonar-Scanner\unzipped
