@@ -50,7 +50,8 @@ jobs:
         # /EnableCodeCoverage /Logger:trx;LogFileName=SonarqubeCoverage.trx
 
       - name: Download Sonar-Scanner
-        working-directory: ./
+        # working-directory: ./
+        shell: pwsh
         run: |
           Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile ".\sonar-scanner\sonar-scanner-msbuild.zip"
 
