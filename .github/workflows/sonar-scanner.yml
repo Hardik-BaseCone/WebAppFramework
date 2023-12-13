@@ -15,10 +15,14 @@ on:
       - main
       
 jobs:
-  Application-Build-Test:
+  sonar-scanner:
     runs-on: windows-latest
     
     steps:
+      - name: echo
+        run: | 
+          echo ${{ secrets.BASECONE_SONARQUBE_TOKEN }}
+          
       - name: Download Sonar-Scanner
         # working-directory: ./
         shell: pwsh
