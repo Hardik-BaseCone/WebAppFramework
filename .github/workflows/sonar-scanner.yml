@@ -22,7 +22,8 @@ jobs:
       - name: echo d
         shell: pwsh
         run: | 
-          echo ${{ secrets.BASECONE_SONARQUBE_TOKEN }}
+          echo 'hello'
+          echo '${{ secrets.BASECONE_SONARQUBE_TOKEN }}'
           
       - name: Download Sonar-Scanner
         # working-directory: ./
