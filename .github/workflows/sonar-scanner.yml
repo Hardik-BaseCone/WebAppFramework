@@ -12,7 +12,7 @@ on:
           - dotnet-coverage
   push: 
     branches:
-      - main
+      - master
       
 jobs:
   sonar-scanner:
