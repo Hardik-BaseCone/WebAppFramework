@@ -19,7 +19,8 @@ jobs:
     runs-on: windows-latest
     
     steps:
-      - name: echo
+      - name: echo d
+        shell: pwsh
         run: | 
           echo ${{ secrets.BASECONE_SONARQUBE_TOKEN }}
           
