@@ -23,8 +23,9 @@ jobs:
         # working-directory: ./
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile "sonar-scanner-msbuild.zip"
+          Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile "D:\a\sonar-scanner-msbuild.zip"
 
       - name: Unzipp Sonar-Scanner
+        working-directory: D:/a/
         run: |
           Expand-Archive -Force sonar-scanner-msbuild.zip unzipped
