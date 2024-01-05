@@ -12,7 +12,7 @@ on:
           - dotnet-coverage
   push: 
     branches:
-      - main
+      - to-be-updated
       
 jobs:
   Application-Build-Test:
