@@ -39,11 +39,6 @@ jobs:
           dotnet-version: 3.1.x
           dotnet-quality: ga
   
-      
-
-      #- name: Add .NET Core SDK tools to PATH
-      #  run: echo "PATH='$PATH:~/.dotnet/tools'" >> $GITHUB_ENV
-  
       - name: Install SonarQube scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
@@ -58,7 +53,7 @@ jobs:
 
       - name: Build with Release
         run: |
-          msbuild /p:Configuration=Release WebAppFramework.sln
+          msbuild WebAppFramework.sln /p:Configuration=Release -t:rebuild
       
       - name: Coverlet generate coverage
         run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs '**\*\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage' -f=opencover -o="coverage.xml"
