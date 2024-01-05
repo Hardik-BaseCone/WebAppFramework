@@ -27,34 +27,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
                     
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.3.1
+      - name: Setup .Net 3.1.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 3.1.x
+          dotnet-quality: ga
+  
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v3
+        env:
+          DOTNET_INSTALL_DIR: '~/.dotnet'
+          DOTNET_NOLOGO: true
+          DOTNET_CLI_TELEMETRY_OPTOUT: true
+          DOTNET_MULTILEVEL_LOOKUP: false
+        with:
+          dotnet-version: 6.x
+          dotnet-quality: ga
 
-      - name: Setup VSTest
-        # id: setup_vstest
-        uses: darenm/Setup-VSTest@v1
-
+      - name: Add .NET Core SDK tools to PATH
+        run: echo "PATH=$PATH:~/.dotnet/tools" >> $GITHUB_ENV
+  
+      - name: Install SonarQube scanner
+        run: dotnet tool install --global dotnet-sonarscanner
+          
       - name: Restore packages
         run: |
-          nuget restore WebAppFramework.sln
+          dotnet restore WebAppFramework.sln
 
       - name: Build with Release
         run: |
-          msbuild /p:Configuration=Release WebAppFramework.sln
+          dotnet build WebAppFramework.sln -c Release --no-incremental
       
-      - name: Run Tests
-        # id: run_vstest
-        working-directory: WebAppFramework.Unit.Tests\bin\Release
-        run: |
-          vstest.console.exe .\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage /collect:"Code Coverage"
-        # /EnableCodeCoverage /Logger:trx;LogFileName=SonarqubeCoverage.trx
-
-      - name: Download Sonar-Scanner
-        # working-directory: ./
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -Uri https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.15.0.80890/sonar-scanner-msbuild-5.15.0.80890-net46.zip -OutFile ".\sonar-scanner\sonar-scanner-msbuild.zip"
-
-      - name: Unzipp Sonar-Scanner
-        run: |
-          Expand-Archive -Force .\sonar-scanner\sonar-scanner-msbuild.zip .\Sonar-Scanner\unzipped
+      - name: Generate and collect unit tests coverage report [Coverlet]
+        run: coverlet .\WebAppFramework.Unit.Tests.dll --target "dotnet" --targetargs 'test WebAppFramework.sln -c Release --no-restore --collect:"XPlat Code Coverage"' -f=opencover -o="coverage.xml"
+      
