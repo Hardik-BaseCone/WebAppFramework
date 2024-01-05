@@ -70,5 +70,5 @@ jobs:
           msbuild /p:Configuration=Release WebAppFramework.sln
       
       - name: Generate and collect unit tests coverage report [Coverlet]
-        run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\WebAppFramework.Unit.Tests.dll --target "vstest.console.exe" --targetargs '.\WebAppFramework.Unit.Tests.dll' -f=opencover -o="coverage.xml"
+        run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\WebAppFramework.Unit.Tests.dll --target "vstest.console.exe" --targetargs '.\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage /collect:"code coverage"' -f=opencover -o="coverage.xml"
       
