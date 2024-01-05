@@ -1,4 +1,4 @@
-name: Sonar Code Coverage
+name: Sonarqube with coverlet to find coverage
 on:
   # trigger manually. Can be used to validate feature branches before open pull request
   workflow_dispatch:
@@ -55,6 +55,11 @@ jobs:
   
       - name: Install SonarQube scanner
         run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Install Coverlet tool
+        run: |
+          echo "SONARQUBE_TEST_REPORT=/d:sonar.cs.opencover.reportsPaths=coverage.xml" >> $GITHUB_ENV
+          dotnet tool install --global coverlet.console
           
       - name: Restore packages
         run: |
