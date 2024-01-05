@@ -52,7 +52,7 @@ jobs:
           
       - name: Restore packages
         run: |
-          dotnet restore WebAppFramework.sln
+          nuget restore WebAppFramework.sln
 
       - name: Build with Release
         run: |
