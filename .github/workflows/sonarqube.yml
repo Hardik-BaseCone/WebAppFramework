@@ -26,6 +26,12 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+      
+      - name: Setup VSTest
+        uses: darenm/Setup-VSTest@v1
                     
       - name: Setup .Net 3.1.0
         uses: actions/setup-dotnet@v3
@@ -56,8 +62,8 @@ jobs:
 
       - name: Build with Release
         run: |
-          dotnet build WebAppFramework.sln -c Release --no-incremental
+          msbuild /p:Configuration=Release WebAppFramework.sln
       
       - name: Generate and collect unit tests coverage report [Coverlet]
-        run: coverlet .\WebAppFramework.Unit.Tests.dll --target "dotnet" --targetargs 'test WebAppFramework.sln -c Release --no-restore --collect:"XPlat Code Coverage"' -f=opencover -o="coverage.xml"
+        run: coverlet .\WebAppFramework.Unit.Tests.dll --target "vstest.console.exe" --targetargs '.\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage /collect:"Code Coverage"' -f=opencover -o="coverage.xml"
       
