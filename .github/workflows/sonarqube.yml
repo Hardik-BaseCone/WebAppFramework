@@ -60,8 +60,12 @@ jobs:
       - name: Coverlet generate coverage
         run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs "**\*\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage" -f=opencover -o="coverage.xml"
         # --collect:\`"Code Coverage\`"
-
+      
+      - name: read coverage file
+        # working-directory: D:\a\WebAppFramework\
+        run: Get-Content -Path **\*.coverage
+        
       - name: read xml
-        working-directory: D:\a\WebAppFramework\
+        # working-directory: D:\a\WebAppFramework\
         run: Get-Content -Path **\*.xml
       
