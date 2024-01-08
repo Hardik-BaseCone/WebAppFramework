@@ -63,5 +63,5 @@ jobs:
 
       - name: read xml
         working-directory: D:\a\WebAppFramework\WebAppFramework
-        run: coverage.xml
+        run: Get-Content -Path coverage.xml
       
