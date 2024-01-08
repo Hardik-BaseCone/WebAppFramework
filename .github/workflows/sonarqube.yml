@@ -62,7 +62,7 @@ jobs:
         # --collect:\`"Code Coverage\`"
       
       - name: read coverage file
-        working-directory: D:\a\WebAppFramework\
+        working-directory: D:\a\WebAppFramework\WebAppFramework\TestResults\
         run: Get-Content -Path **\*.coverage
         
       - name: read xml file
