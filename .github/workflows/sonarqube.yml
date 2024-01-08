@@ -70,5 +70,6 @@ jobs:
       - name: read xml file
         if: 1==1
         working-directory: D:\
-        run: Get-Content -Path **\coverage.opencover.xml
+        # run: Get-Content -Path **\coverage.opencover.xml
+        run: Get-Content -Path **\coverage.json
       
