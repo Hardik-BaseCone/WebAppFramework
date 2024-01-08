@@ -68,7 +68,7 @@ jobs:
         run: Get-Content -Path **\*.coverage
         
       - name: read xml file
-        if: 1==0
-        working-directory: D:\a\WebAppFramework\
-        run: Get-Content -Path **\coverage.xml
+        if: 1==1
+        working-directory: D:\a\
+        run: Get-Content -Path **\*\coverage.opencover.xml
       
