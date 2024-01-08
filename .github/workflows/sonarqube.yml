@@ -58,7 +58,7 @@ jobs:
           msbuild WebAppFramework.sln /p:Configuration=Release -t:rebuild
       
       - name: Coverlet generate coverage
-        run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs "**\*\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage" --verbosity detailed --format "opencover" --output \coverage-reports\
+        run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs "**\*\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage" --verbosity detailed --format "json" --output \coverage-reports\
         # -f=opencover -o="coverage.xml"
         # --collect:\`"Code Coverage\`"
       
