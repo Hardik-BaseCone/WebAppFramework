@@ -41,12 +41,12 @@ jobs:
           dotnet-version: 3.1.x
           # dotnet-quality: ga
   
-      - name: Install SonarQube scanner
-        run: dotnet tool install --global dotnet-sonarscanner
+      #- name: Install SonarQube scanner
+      #  run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Install Coverlet tool
         run: |
-          echo "SONARQUBE_TEST_REPORT=/d:sonar.cs.opencover.reportsPaths=coverage.xml" >> $GITHUB_ENV
+          # echo "SONARQUBE_TEST_REPORT=/d:sonar.cs.opencover.reportsPaths=coverage.xml" >> $GITHUB_ENV
           dotnet tool install --global coverlet.console
           
       - name: Restore packages
