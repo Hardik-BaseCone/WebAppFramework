@@ -13,7 +13,11 @@ on:
   push: 
     branches:
       - main
-      
+
+env:
+  TOOL_TO_USE: dotnet-coverage
+  # TOOL_TO_USE: coverlet
+    
 jobs:
   Application-Build-Test:
     runs-on: windows-latest
@@ -35,19 +39,26 @@ jobs:
         # with:
         #  node-version: '16'
                     
-      - name: Setup .Net 3.1.0
+      - name: Setup .Net 8.0.1
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 3.1.x
-          # dotnet-quality: ga
+          dotnet-version: 8.0.1
+          dotnet-quality: ga
   
       #- name: Install SonarQube scanner
       #  run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Install Coverlet tool
+        if: ${{ env.TOOL_TO_USE == 'coverlet' }}
         run: |
           # echo "SONARQUBE_TEST_REPORT=/d:sonar.cs.opencover.reportsPaths=coverage.xml" >> $GITHUB_ENV
           dotnet tool install --global coverlet.console
+
+      - name: Install dotnet-coverage tool
+        if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
+        run: |
+          # echo "SONARQUBE_TEST_REPORT=/d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml" >> $GITHUB_ENV
+          dotnet tool install --global dotnet-coverage
           
       - name: Restore packages
         run: |
@@ -58,10 +69,15 @@ jobs:
           msbuild WebAppFramework.sln /p:Configuration=Release -t:rebuild
       
       - name: Coverlet generate coverage
+        if: ${{ env.TOOL_TO_USE == 'coverlet' }}
         run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs "**\*\WebAppFramework.Unit.Tests.dll" --verbosity detailed --format "opencover" --output \coverage-reports\
         # run: coverlet D:\a\WebAppFramework\WebAppFramework\WebAppFramework.Unit.Tests\bin\Release\ --target "vstest.console.exe" --targetargs "**\*\WebAppFramework.Unit.Tests.dll /EnableCodeCoverage" --verbosity detailed --format "json" --output \coverage-reports\
         # -f=opencover -o="coverage.xml"
         # --collect:\`"Code Coverage\`"
+
+      - name: Coverlet generate coverage
+        if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
+        run: dotnet-coverage collect "vstest.console.exe **\*\WebAppFramework.Unit.Tests.dll" -f xml -o "coverage.xml"
       
       - name: read coverage file
         if: 1==0
