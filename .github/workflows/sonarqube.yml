@@ -85,8 +85,13 @@ jobs:
         run: Get-Content -Path **\*.coverage
         
       - name: read xml file
-        if: 1==1
+        if: ${{ env.TOOL_TO_USE == 'coverlet' }}
         working-directory: D:\
         run: Get-Content -Path **\coverage.opencover.xml
         # run: Get-Content -Path **\coverage.json
       
+      - name: read xml file
+        if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
+        working-directory: D:\a\
+        run: Get-Content -Path **\coverage.xml
+        # run: Get-Content -Path **\coverage.json
