@@ -15,8 +15,8 @@ on:
       - main
 
 env:
-  # TOOL_TO_USE: dotnet-coverage
-  TOOL_TO_USE: coverlet
+  TOOL_TO_USE: dotnet-coverage
+  # TOOL_TO_USE: coverlet
     
 jobs:
   Application-Build-Test:
