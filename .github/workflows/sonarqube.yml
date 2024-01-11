@@ -77,7 +77,7 @@ jobs:
 
       - name: dotnet-coverage generate coverage
         if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
-        run: dotnet-coverage collect "vstest.console.exe **\*\WebAppFramework.Unit.Tests.dll" -f xml -o "d:\a\coverage.xml"
+        run: dotnet-coverage collect "vstest.console.exe **\*\WebAppFramework.Unit.Tests.dll" -f xml -o "d:\a\results\coverage.xml"
       
       - name: read coverage file
         if: 1==0
@@ -92,5 +92,5 @@ jobs:
       
       - name: read dotnet-coverage xml file
         if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
-        working-directory: D:\
+        working-directory: D:\a\
         run: Get-Content -Path **\coverage.xml
