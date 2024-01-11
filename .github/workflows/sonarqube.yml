@@ -75,7 +75,7 @@ jobs:
         # -f=opencover -o="coverage.xml"
         # --collect:\`"Code Coverage\`"
 
-      - name: Coverlet generate coverage
+      - name: dotnet-coverage generate coverage
         if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
         run: dotnet-coverage collect "vstest.console.exe **\*\WebAppFramework.Unit.Tests.dll" -f xml -o "coverage.xml"
       
@@ -84,14 +84,13 @@ jobs:
         working-directory: D:\a\WebAppFramework\WebAppFramework\TestResults\
         run: Get-Content -Path **\*.coverage
         
-      - name: read xml file
+      - name: read coverlet xml file
         if: ${{ env.TOOL_TO_USE == 'coverlet' }}
         working-directory: D:\
         run: Get-Content -Path **\coverage.opencover.xml
         # run: Get-Content -Path **\coverage.json
       
-      - name: read xml file
+      - name: read dotnet-coverage xml file
         if: ${{ env.TOOL_TO_USE == 'dotnet-coverage' }}
-        working-directory: D:\a\
+        working-directory: D:\
         run: Get-Content -Path **\coverage.xml
-        # run: Get-Content -Path **\coverage.json
