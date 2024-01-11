@@ -16,6 +16,7 @@ on:
 
 env:
   TOOL_TO_USE: dotnet-coverage
+  SONAR_ENABLED: true
   # TOOL_TO_USE: coverlet
     
 jobs:
@@ -40,6 +41,7 @@ jobs:
         #  node-version: '16'
                     
       - name: Setup .Net 6.0
+        if: ${{ SONAR_ENABLED }}
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0
